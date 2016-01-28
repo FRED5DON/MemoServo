@@ -1,0 +1,20 @@
+# [R] 重定向
+# [NE] 在输出中不对URI作转义
+# [NC] 不区分大小写
+# [F] 强制URL为被禁止的 forbidden
+# [G] 强制URL为已废弃的 gone
+# [L] 最后一个规则 last
+# [C] 与下一个规则相链接 chained
+# [QSA] 追加请求串 query string append
+RewriteEngine on 
+RewriteBase /servo/api
+# 用户API
+RewriteRule ^api/user$ user.php?&%{QUERY_STRING}
+RewriteRule ^api/user/([a-zA-Z0-9]*)$ user.php?method=$1&%{QUERY_STRING} [NE]
+# 验证码
+RewriteRule ^api/mateimg/([a-zA-Z0-9]*)$ mate.php?method=$1&%{QUERY_STRING} [NE]
+RewriteRule ^api/mateimg/([a-zA-Z0-9]*)/([a-zA-Z0-9]*)$ mate.php?method=$1&v=$2&%{QUERY_STRING} [NE]
+
+RewriteRule ^api/notes$ notes.php?&%{QUERY_STRING}
+RewriteRule ^api/notes/(.*)$ notes.php?id=$1&%{QUERY_STRING} [NE]
+
